@@ -11,6 +11,17 @@ const addOneThirdClassToFigures = () => {
     });
 }
 
+const handleFifthFigureDoubleClick = () => {
+    var figures = document.querySelectorAll("figure");
+    figures.forEach((figure) => {  
+      figure.addEventListener("dblclick", () => {
+        if (figure === figures[4]) {
+          figure.style.visibility = "hidden";
+        }
+      });
+    });
+}
+
 const handleFooterClick = () => {
     var footer = document.querySelector("footer");
     footer.addEventListener("click", () => {
@@ -50,12 +61,15 @@ document.addEventListener("DOMContentLoaded", () => {
     addOneThirdClassToFigures(); 
 
     // problem 2
-    handleFooterClick(); 
+    handleFifthFigureDoubleClick();
 
     // problem 3
-    handleFirstFigureMouseEvents(); 
+    handleFooterClick(); 
 
     // problem 4
+    handleFirstFigureMouseEvents(); 
+
+    // problem 5
     handleFirstFigureFocusEvents(); 
   });
   
