@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Taimur — Full-Stack Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --border: #1f1f1f;
+    --text: #e8e3dc;
+    --muted: #5a5652;
+    --accent: #c8f060;
+    --accent2: #f06060;
+    --accent3: #60c8f0;
+    --font-display: 'Syne', sans-serif;
+    --font-serif: 'Instrument Serif', serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-display);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, opacity 0.2s;
+    mix-blend-mode: exclusion;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.2s;
+    opacity: 0.4;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 4rem;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  nav.scrolled {
+    border-color: var(--border);
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4rem;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-photo-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+  .hero-photo-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: linear-gradient(135deg, var(--accent) 0%, transparent 60%);
+    z-index: 0;
+  }
+  .hero-photo-wrap img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 280px;
+    height: 370px;
+    object-fit: cover;
+    object-position: center 35%;
+    filter: grayscale(20%);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -20%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,240,96,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-label::before {
+    content: '';
+    width: 2rem; height: 1px;
+    background: var(--accent);
+    display: inline-block;
+  }
+  h1 {
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+  h1 em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .hero-desc {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 42ch;
+    margin: 2rem 0 3rem;
+  }
+  .hero-desc strong { color: var(--text); font-style: italic; }
+  .hero-cta {
+    display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: none;
+    transition: all 0.25s;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0a;
+  }
+  .btn-primary:hover { background: #d4f570; transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-right {
+    display: flex; justify-content: flex-end; align-items: center;
+  }
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    border: 1px solid var(--border);
+    background: var(--border);
+  }
+  .stat-box {
+    background: var(--bg);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-box::before {
+    content: attr(data-icon);
+    position: absolute;
+    top: 1rem; right: 1rem;
+    font-size: 1.2rem;
+    opacity: 0.4;
+  }
+  .stat-num {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1.2rem 0;
+    background: var(--surface);
+  }
+  .marquee-track {
+    display: flex; gap: 3rem; width: max-content;
+    animation: marquee 25s linear infinite;
+  }
+  .marquee-item {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 3rem;
+  }
+  .marquee-item::after {
+    content: '✦';
+    color: var(--accent);
+    font-size: 0.6rem;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTIONS */
+  section { padding: 7rem 4rem; }
+  .section-header {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .section-title em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: auto;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .about-text p {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .about-text p strong { color: var(--text); }
+  .about-text p em { color: var(--accent); font-style: normal; }
+
+  /* STACK */
+  .stack-groups { display: flex; flex-direction: column; gap: 2rem; }
+  .stack-group { border-left: 1px solid var(--border); padding-left: 1.5rem; }
+  .stack-group-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .stack-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: var(--surface);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* PROJECTS */
+  #projects { padding: 7rem 0; }
+  #projects .section-header { padding: 0 4rem; }
+
+  .project-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 520px;
+    border-top: 1px solid var(--border);
+    transition: background 0.3s;
+    position: relative;
+  }
+  .project-item:last-child { border-bottom: 1px solid var(--border); }
+  .project-item:hover { background: var(--surface); }
+  .project-item.reverse { direction: rtl; }
+  .project-item.reverse > * { direction: ltr; }
+
+  .project-info {
+    padding: 3.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .project-meta {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .project-num {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .project-role {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--border);
+  }
+  .project-title {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+  .project-desc {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .project-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    padding: 0.25rem 0.6rem;
+    background: rgba(200,240,96,0.08);
+    color: var(--accent);
+    border: 1px solid rgba(200,240,96,0.2);
+  }
+
+  .project-media {
+    position: relative;
+    overflow: hidden;
+    background: #0d0d0d;
+    height: 480px;
+  }
+
+  /* CAROUSEL */
+  .carousel {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+  }
+  .carousel-track-wrap {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  .carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  }
+  .carousel-slide {
+    height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+    flex-shrink: 0;
+  }
+  .carousel-slide img {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+    display: block;
+  }
+  .carousel-controls {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--border);
+    background: rgba(10,10,10,0.8);
+    backdrop-filter: blur(8px);
+    flex-shrink: 0;
+  }
+  .carousel-dots {
+    display: flex; gap: 0.4rem; align-items: center; justify-content: center;
+    padding: 0.6rem 0;
+    flex-shrink: 0;
+  }
+  .carousel-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.2s, transform 0.2s;
+    cursor: none;
+  }
+  .carousel-dot.active {
+    background: var(--accent);
+    transform: scale(1.4);
+  }
+  .carousel-btns { display: flex; gap: 0.5rem; }
+  .carousel-btn {
+    width: 28px; height: 28px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.75rem;
+    cursor: none;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    border-radius: 2px;
+  }
+  .carousel-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200,240,96,0.06);
+  }
+  .carousel-caption {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* Accent stripe */
+  .project-accent {
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--accent);
+    transition: height 0.4s ease;
+  }
+  .project-item:hover .project-accent { height: 100%; }
+
+  /* CONTACT */
+  .contact-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contact-inner h2 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .contact-inner h2 em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .contact-inner p {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin-bottom: 3rem;
+    line-height: 1.7;
+  }
+  .contact-links {
+    display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; grid-template-columns: 1fr; }
+    .hero-photo-wrap { order: -1; display: flex; justify-content: flex-start; }
+    .hero-photo-wrap::before { display: none; }
+    .hero-photo-wrap img { width: 80px; height: 80px; border-radius: 50%; object-position: center 35%; border: 2px solid var(--accent); }
+    section { padding: 5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .project-item { grid-template-columns: 1fr; min-height: auto; }
+    .project-item.reverse { direction: ltr; }
+    .project-media { height: 300px; }
+    .project-info { padding: 2rem 1.5rem; }
+    #projects .section-header { padding: 0 1.5rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">T<span>.</span>HS</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Work</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Available for contract work</div>
+    <h1>Full-Stack<br/><em>Software</em><br/>Engineer</h1>
+    <p class="hero-desc">
+      I don't just build features — I architect systems. <strong>From initial design to deployment</strong>, I bring a true engineering mindset to every project: scalable, maintainable, and thoughtfully implemented.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Work ↓</a>
+      <a href="https://upwork.com/freelancers/taimurhs" target="_blank" class="btn btn-ghost">Upwork Profile ↗</a>
+      <a href="Taimur Hassan Sarmad - Resume.pdf" target="_blank" class="btn btn-ghost">Resume ↓</a>
+    </div>
+  </div>
+  <div class="hero-photo-wrap">
+    <img src="photo.jpg" alt="Taimur"/>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">React.js</span>
+    <span class="marquee-item">TypeScript</span>
+    <span class="marquee-item">Node.js</span>
+    <span class="marquee-item">Python</span>
+    <span class="marquee-item">AWS</span>
+    <span class="marquee-item">Fabric.js</span>
+    <span class="marquee-item">LangChain</span>
+    <span class="marquee-item">OpenAI</span>
+    <span class="marquee-item">React Native</span>
+    <span class="marquee-item">PHP</span>
+    <span class="marquee-item">Redux</span>
+    <span class="marquee-item">Firebase</span>
+    <span class="marquee-item">React.js</span>
+    <span class="marquee-item">TypeScript</span>
+    <span class="marquee-item">Node.js</span>
+    <span class="marquee-item">Python</span>
+    <span class="marquee-item">AWS</span>
+    <span class="marquee-item">Fabric.js</span>
+    <span class="marquee-item">LangChain</span>
+    <span class="marquee-item">OpenAI</span>
+    <span class="marquee-item">React Native</span>
+    <span class="marquee-item">PHP</span>
+    <span class="marquee-item">Redux</span>
+    <span class="marquee-item">Firebase</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header fade-in">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About <em>me</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <p>In a market saturated with vibe-coders, I offer a different value proposition: a <strong>true engineering mindset</strong> at a competitive market rate.</p>
+      <p>I specialize in designing and building systems with a deep understanding of <em>architecture, performance, scalability and maintainability</em> across the entire stack — from initial design to deployment and post-release optimization.</p>
+      <p>If you value <strong>thoughtfully implemented solutions, clear communication, and long-term reliability</strong>, then we'll likely be a great fit.</p>
+    </div>
+    <div class="stack-groups fade-in">
+      <div class="stack-group">
+        <div class="stack-group-label">Frontend</div>
+        <div class="stack-tags">
+          <span class="tag">React.js</span>
+          <span class="tag">React Native</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">SCSS</span>
+          <span class="tag">Fabric.js</span>
+          <span class="tag">Redux</span>
+          <span class="tag">Webpack</span>
+          <span class="tag">Vite</span>
+          <span class="tag">Storybook</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <div class="stack-group-label">Backend</div>
+        <div class="stack-tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Python</span>
+          <span class="tag">PHP / CI4</span>
+          <span class="tag">RESTful APIs</span>
+          <span class="tag">Firebase</span>
+          <span class="tag">AWS S3</span>
+          <span class="tag">CloudSearch</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <div class="stack-group-label">AI & ML</div>
+        <div class="stack-tags">
+          <span class="tag">OpenAI</span>
+          <span class="tag">Gemini</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">StabilityAI</span>
+          <span class="tag">Prompt Engineering</span>
+          <span class="tag">Self-hosted LLMs</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <div class="stack-group-label">DevOps & Cloud</div>
+        <div class="stack-tags">
+          <span class="tag">AWS EC2</span>
+          <span class="tag">Ubuntu</span>
+          <span class="tag">NGINX</span>
+          <span class="tag">Apache</span>
+          <span class="tag">Cron Jobs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header fade-in">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Selected <em>Work</em></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- Project 1: AI Chat Agent -->
+  <div class="project-item fade-in">
+    <div class="project-accent"></div>
+    <div class="project-info">
+      <div class="project-meta">
+        <span class="project-num">01 / 06</span>
+        <span class="project-role">Lead Full-Stack &amp; AI Engineer</span>
+      </div>
+      <div class="project-title">PosterMyWall AI Chat Agent</div>
+      <p class="project-desc">A multi-agent AI orchestrator that automates marketing workflows via natural language. Engineered agentic workflows with Gemini and OpenAI that automatically infer user intent and trigger complex tool-calling — image generation, editing, upscaling, and social scheduling — all with a single prompt. Scaled to <strong>165k+ chats</strong> and <strong>96k+ created assets</strong> in a 6-week soft launch.</p>
+      <div class="project-tags">
+        <span class="project-tag">React</span>
+        <span class="project-tag">LangChain</span>
+        <span class="project-tag">OpenAI</span>
+        <span class="project-tag">Gemini</span>
+        <span class="project-tag">Prompt Engineering</span>
+        <span class="project-tag">AI Chatbot</span>
+      </div>
+    </div>
+    <div class="project-media">
+      <div class="carousel" data-captions="New Chat Homepage,All Chats Sidebar,Chat Interface,Chat In-Progress 1,Chat In-Progress 2,Mobile UI,Agent Playground">
+        <div class="carousel-track-wrap">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="p1_1.png" alt="New Chat Homepage"/></div>
+            <div class="carousel-slide"><img src="p1_2.png" alt="All Chats Sidebar"/></div>
+            <div class="carousel-slide"><img src="p1_3.png" alt="Chat Interface"/></div>
+            <div class="carousel-slide"><img src="p1_4.png" alt="Chat In-Progress 1"/></div>
+            <div class="carousel-slide"><img src="p1_5.png" alt="Chat In-Progress 2"/></div>
+            <div class="carousel-slide"><img src="p1_6.png" alt="Mobile UI"/></div>
+            <div class="carousel-slide"><img src="p1_7.png" alt="Agent Playground"/></div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <span class="carousel-caption">New Chat Homepage</span>
+          <div class="carousel-dots"></div>
+          <div class="carousel-btns">
+            <button class="carousel-btn prev">&#8592;</button>
+            <button class="carousel-btn next">&#8594;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 2: AQI App -->
+  <div class="project-item reverse fade-in">
+    <div class="project-accent"></div>
+    <div class="project-info">
+      <div class="project-meta">
+        <span class="project-num">02 / 06</span>
+        <span class="project-role">UI/UX Design + Full-Stack Engineer</span>
+      </div>
+      <div class="project-title">Lahore AQI Monitoring App</div>
+      <p class="project-desc">Collaborated with the government to build an AQI forecasting app. Designed a RESTful API to unify per-minute data from 9 urban stations and 200+ locations with automated cron jobs. The ML model generates next-day predictions via push notifications. Built in React Native, optimized for low-end Android hardware and unstable networks.</p>
+      <div class="project-tags">
+        <span class="project-tag">React Native</span>
+        <span class="project-tag">UI/UX Design</span>
+        <span class="project-tag">Predictive ML</span>
+        <span class="project-tag">AWS EC2</span>
+        <span class="project-tag">REST API</span>
+      </div>
+    </div>
+    <div class="project-media">
+      <div class="carousel" data-captions="Revamped &amp; Improved UX,Initial UI">
+        <div class="carousel-track-wrap">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="p2_1.png" alt="Revamped UX"/></div>
+            <div class="carousel-slide"><img src="p2_2.png" alt="Initial UI"/></div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <span class="carousel-caption">Revamped &amp; Improved UX</span>
+          <div class="carousel-dots"></div>
+          <div class="carousel-btns">
+            <button class="carousel-btn prev">&#8592;</button>
+            <button class="carousel-btn next">&#8594;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 3: AI Subtitles -->
+  <div class="project-item fade-in">
+    <div class="project-accent"></div>
+    <div class="project-info">
+      <div class="project-meta">
+        <span class="project-num">03 / 06</span>
+        <span class="project-role">Full-Stack Engineer</span>
+      </div>
+      <div class="project-title">AI Subtitles &amp; Caption Engine</div>
+      <p class="project-desc">Automated subtitle engine using OpenAI transcription APIs, with a custom timeline-UI for audio/video sync. Built a specialized Fabric.js canvas item using grouped objects for high-performance, deeply customizable on-canvas captions — more feature-rich than CapCut, with zero canvas bloat or lag.</p>
+      <div class="project-tags">
+        <span class="project-tag">React</span>
+        <span class="project-tag">TypeScript</span>
+        <span class="project-tag">Fabric.js</span>
+        <span class="project-tag">OpenAI STT</span>
+        <span class="project-tag">Redux</span>
+      </div>
+    </div>
+    <div class="project-media">
+      <div class="carousel" data-captions="Timeline Editor,AI Subtitles Selection,Subtitle Generation,Subtitle Panel,Customize Style,Highlight Word,Style Presets">
+        <div class="carousel-track-wrap">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="p3_1.png" alt="Timeline Editor"/></div>
+            <div class="carousel-slide"><img src="p3_2.png" alt="AI Subtitles Selection"/></div>
+            <div class="carousel-slide"><img src="p3_3.png" alt="Subtitle Generation"/></div>
+            <div class="carousel-slide"><img src="p3_4.png" alt="Subtitle Panel"/></div>
+            <div class="carousel-slide"><img src="p3_5.png" alt="Customize Style"/></div>
+            <div class="carousel-slide"><img src="p3_6.png" alt="Highlight Word"/></div>
+            <div class="carousel-slide"><img src="p3_7.png" alt="Style Presets"/></div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <span class="carousel-caption">Timeline Editor</span>
+          <div class="carousel-dots"></div>
+          <div class="carousel-btns">
+            <button class="carousel-btn prev">&#8592;</button>
+            <button class="carousel-btn next">&#8594;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 4: AI Image Generation -->
+  <div class="project-item reverse fade-in">
+    <div class="project-accent"></div>
+    <div class="project-info">
+      <div class="project-meta">
+        <span class="project-num">04 / 06</span>
+        <span class="project-role">Full-Stack Engineer</span>
+      </div>
+      <div class="project-title">AI Image Generation Panel</div>
+      <p class="project-desc">Full-stack text-to-image workflow panel with dynamic state management, custom loading skeletons, and interactive prompt/style controls. Engineered the backend to orchestrate multiple AI image models with prompt validation, user quota management, and automated Stripe integration. Optimized asset ingestion pipeline injects AI images directly onto the design canvas.</p>
+      <div class="project-tags">
+        <span class="project-tag">React</span>
+        <span class="project-tag">Gemini</span>
+        <span class="project-tag">Redux</span>
+        <span class="project-tag">Stripe</span>
+        <span class="project-tag">AI Image Gen</span>
+      </div>
+    </div>
+    <div class="project-media">
+      <div class="carousel" data-captions="Image Gallery,Style Selection,AI Model Selection">
+        <div class="carousel-track-wrap">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="p4_1.png" alt="Image Gallery"/></div>
+            <div class="carousel-slide"><img src="p4_2.png" alt="Style Selection"/></div>
+            <div class="carousel-slide"><img src="p4_3.png" alt="AI Model Selection"/></div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <span class="carousel-caption">Image Gallery</span>
+          <div class="carousel-dots"></div>
+          <div class="carousel-btns">
+            <button class="carousel-btn prev">&#8592;</button>
+            <button class="carousel-btn next">&#8594;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 5: AI Sticker Generation -->
+  <div class="project-item fade-in">
+    <div class="project-accent"></div>
+    <div class="project-info">
+      <div class="project-meta">
+        <span class="project-num">05 / 06</span>
+        <span class="project-role">Full-Stack Engineer</span>
+      </div>
+      <div class="project-title">AI Sticker Generation &amp; Tagging</div>
+      <p class="project-desc">Comprehensive Admin Dashboard automating the lifecycle of thousands of stock media assets. Engineered an end-to-end AI pipeline that generates stickers at scale and auto-assigns context-aware keywords, drastically improving semantic search accuracy. Built with lazy loading, categorized tabs, and complex filtering to handle heavy asset payloads.</p>
+      <div class="project-tags">
+        <span class="project-tag">React</span>
+        <span class="project-tag">AI Image Gen</span>
+        <span class="project-tag">AWS CloudSearch</span>
+        <span class="project-tag">Admin Dashboard</span>
+      </div>
+    </div>
+    <div class="project-media">
+      <div class="carousel" data-captions="Generate AI Stickers,Manage PMW Stock">
+        <div class="carousel-track-wrap">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="p5_1.png" alt="Generate AI Stickers"/></div>
+            <div class="carousel-slide"><img src="p5_2.png" alt="Manage PMW Stock"/></div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <span class="carousel-caption">Generate AI Stickers</span>
+          <div class="carousel-dots"></div>
+          <div class="carousel-btns">
+            <button class="carousel-btn prev">&#8592;</button>
+            <button class="carousel-btn next">&#8594;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 6: Sticker Extraction -->
+  <div class="project-item reverse fade-in">
+    <div class="project-accent"></div>
+    <div class="project-info">
+      <div class="project-meta">
+        <span class="project-num">06 / 06</span>
+        <span class="project-role">Full-Stack Engineer</span>
+      </div>
+      <div class="project-title">Automated Stock Sticker Extraction</div>
+      <p class="project-desc">Eliminated a major design bottleneck with a custom Python computer vision pipeline. Engineered a system to isolate individual stickers from large sheets — automated cropping, AI upscaling, and background removal. Transformed a manual process limited to 50 stickers/day into an automated workflow processing <strong>100+ assets in minutes</strong> — a 2,000%+ capacity increase.</p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Computer Vision</span>
+        <span class="project-tag">React</span>
+        <span class="project-tag">AI Upscaling</span>
+      </div>
+    </div>
+    <div class="project-media">
+      <div class="carousel" data-captions="Step 1: Select sheet(s),Step 2: Inspect extracted stickers">
+        <div class="carousel-track-wrap">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="p6_1.png" alt="Select Sticker Sheet"/></div>
+            <div class="carousel-slide"><img src="p6_2.png" alt="Extracted Stickers"/></div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <span class="carousel-caption">Step 1: Select sheet(s)</span>
+          <div class="carousel-dots"></div>
+          <div class="carousel-btns">
+            <button class="carousel-btn prev">&#8592;</button>
+            <button class="carousel-btn next">&#8594;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--surface);border-top:1px solid var(--border);">
+  <div class="contact-inner fade-in">
+    <h2>Let's build something <em>great</em> together</h2>
+    <p>Available for immediate remote contract work. Specializing in e-commerce, DTC brands, and AI-powered product development.</p>
+    <div class="contact-links">
+      <a href="mailto:taimur.h.sarmad@gmail.com" class="btn btn-primary">Send an Email ↗</a>
+      <a href="https://upwork.com/freelancers/taimurhs" target="_blank" class="btn btn-ghost">View Upwork ↗</a>
+      <a href="Taimur Hassan Sarmad - Resume.pdf" target="_blank" class="btn btn-ghost">Download Resume ↓</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Taimur H.S. — Full-Stack Software Engineer</p>
+  <p>Built from scratch · Deployed on GitHub Pages</p>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+  });
+  function animateRing() {
+    rx += (mx - rx) * 0.28;
+    ry += (my - ry) * 0.28;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Carousels
+  document.querySelectorAll('.carousel').forEach(car => {
+    const wrap = car.querySelector('.carousel-track-wrap');
+    const track = car.querySelector('.carousel-track');
+    const slides = car.querySelectorAll('.carousel-slide');
+    const dotsWrap = car.querySelector('.carousel-dots');
+    const caption = car.querySelector('.carousel-caption');
+    const captions = (car.dataset.captions || '').split(',');
+    let idx = 0;
+
+    // Set each slide to the exact pixel width of the visible window
+    function setWidths() {
+      const w = wrap.offsetWidth;
+      slides.forEach(s => { s.style.width = w + 'px'; s.style.flexShrink = '0'; });
+    }
+    setWidths();
+    window.addEventListener('resize', () => { setWidths(); go(idx); });
+
+    // Move dots out of controls bar, to sit below the image track
+    car.insertBefore(dotsWrap, car.querySelector('.carousel-controls'));
+
+    // Build dots
+    slides.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => go(i));
+      dotsWrap.appendChild(d);
+    });
+
+    function go(n) {
+      idx = (n + slides.length) % slides.length;
+      track.style.transform = `translateX(-${idx * wrap.offsetWidth}px)`;
+      dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+      if (caption && captions[idx]) caption.textContent = captions[idx].trim();
+    }
+
+    car.querySelector('.prev').addEventListener('click', () => go(idx - 1));
+    car.querySelector('.next').addEventListener('click', () => go(idx + 1));
+
+    // Swipe support
+    let tx = 0;
+    car.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+    car.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 40) go(dx < 0 ? idx + 1 : idx - 1);
+    }, {passive:true});
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Fade in on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
