@@ -86,15 +86,15 @@
     outline-offset: 3px;
   }
 
-  /* Scroll progress */
+  /* Scroll progress — sits as the nav's bottom edge */
   .scroll-progress {
-    position: fixed;
-    top: 0; left: 0;
+    position: absolute;
+    bottom: -1px; left: 0;
     height: 2px;
     background: var(--accent);
     width: 0;
-    z-index: 200;
     transition: width 0.05s linear;
+    z-index: 1;
   }
 
   /* Noise overlay */
@@ -1296,7 +1296,6 @@
 <body>
 
 <a href="#main" class="skip-link">Skip to content</a>
-<div class="scroll-progress" id="scrollProgress"></div>
 
 <nav id="nav">
   <a href="#" class="nav-logo">
@@ -1311,6 +1310,7 @@
     <a href="#freelance"><span class="num">05</span>Freelance</a>
     <a href="Taimur Hassan Sarmad - Resume.pdf" target="_blank" class="nav-cta">Resume ↓</a>
   </div>
+  <div class="scroll-progress" id="scrollProgress"></div>
 </nav>
 
 <main id="main">
