@@ -322,11 +322,15 @@
   .hero-photo-wrap {
     position: relative;
     flex-shrink: 0;
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
   }
   .hero-photo-wrap::before {
     content: '';
     position: absolute;
     inset: -2px;
+    width: 384px;
     background: linear-gradient(135deg, var(--accent) 0%, transparent 55%);
     z-index: 0;
   }
@@ -339,6 +343,11 @@
     object-fit: cover;
     object-position: center 35%;
     filter: grayscale(15%);
+  }
+  .hero-photo-wrap .hero-photo-secondary {
+    width: 278px;
+    object-position: center;
+    filter: none;
   }
   .hero-photo-tags {
     position: absolute;
@@ -1260,13 +1269,27 @@
       gap: 2rem;
       min-height: auto;
     }
-    .hero-photo-wrap { order: -1; display: flex; justify-content: flex-start; }
+    .hero-photo-wrap {
+      order: -1;
+      display: flex;
+      justify-content: flex-start;
+      gap: 0.75rem;
+      align-items: stretch;
+    }
     .hero-photo-wrap::before, .hero-photo-wrap::after, .hero-photo-tags { display: none; }
     .hero-photo-wrap img {
-      width: 80px; height: 80px;
-      border-radius: 50%;
+      width: 160px;
+      height: 200px;
+      border-radius: 4px;
+      object-fit: cover;
       object-position: center 35%;
-      border: 2px solid var(--accent);
+      border: 1px solid var(--border-strong);
+      filter: grayscale(15%);
+    }
+    .hero-photo-wrap .hero-photo-secondary {
+      width: 112px;
+      object-position: center;
+      filter: none;
     }
     h1 { font-size: clamp(2.2rem, 10vw, 3.5rem); line-height: 1.05; }
     .hero-desc { font-size: 1.05rem; }
@@ -1330,7 +1353,7 @@
     <h1>Taimur<br/>Hassan Sarmad</h1>
     <div class="hero-role">Full-Stack Software Engineer</div>
     <p class="hero-desc">
-      I architect systems, not just ship features. <strong>From initial design to production deployment</strong>, I build AI-powered web and mobile products that scale — with deep attention to performance, maintainability, and the engineering details that matter.
+      I architect systems, not just ship features. <strong>From initial design to production deployment</strong>, I build AI-powered web and mobile products that scale, with deep attention to performance, maintainability, and the engineering details that matter.
     </p>
     <div class="hero-meta">
       <span class="hero-meta-item">Lahore, PK · Remote-ready</span>
@@ -1358,6 +1381,7 @@
   <div class="hero-photo-wrap">
     <div class="hero-photo-tags">/portfolio/taimur</div>
     <img src="photo.jpg" alt="Photograph of Taimur Hassan Sarmad"/>
+    <img class="hero-photo-secondary" src="desk-setup.png" alt="Taimur's desk setup"/>
   </div>
 </section>
 
@@ -1412,8 +1436,8 @@
   </div>
   <div class="about-grid">
     <div class="about-text fade-in">
-      <p>I'm a full-stack engineer with a focus on <em>AI-powered products</em> and scalable systems. For 2+ years at PosterMyWall, I've shipped features used by millions — from a multi-agent AI orchestrator to a custom Fabric.js timeline editor for subtitles.</p>
-      <p>I specialize in designing and building systems with a deep understanding of <strong>architecture, performance, scalability, and maintainability</strong> across the entire stack — from initial design, to production deployment, to post-release optimization.</p>
+      <p>I'm a full-stack engineer with a focus on <em>AI-powered products</em> and scalable systems. For 2+ years at PosterMyWall, I've shipped features used by millions, from a multi-agent AI orchestrator to a custom Fabric.js timeline editor for subtitles.</p>
+      <p>I specialize in designing and building systems with a deep understanding of <strong>architecture, performance, scalability, and maintainability</strong> across the entire stack, from initial design, to production deployment, to post-release optimization.</p>
       <p>I care about the engineering details: efficient algorithms, the right database for the job (MongoDB? InfluxDB? Redis?), async pipelines, and code that other engineers can pick up six months later without losing context.</p>
       <div class="now-box">
         <div class="now-label">Now</div>
@@ -1504,12 +1528,12 @@
       <h3 class="experience-role">Full-Stack Software Engineer</h3>
       <div class="experience-company">PosterMyWall</div>
       <ul class="experience-bullets">
-        <li><strong>Built a multi-agent AI system</strong> on an extended NeuronAI framework powering PosterMyWall's AI Chat — driving <mark>165K+ chats</mark> and <mark>96K+ generated assets</mark> at a <mark>75% positive feedback rate</mark> during a 6-week unmarketed soft launch. Added parallelism to the agent/node architecture and designed a hybrid agentic multimodal context formation layer (chosen over RAG-style embedding retrieval) that sends only relevant labeled chat assets to downstream agents — cutting workflow latency by <mark>6–8s</mark> and lifting positive feedback ratio by <mark>70%</mark>.</li>
+        <li><strong>Built a multi-agent AI system</strong> on an extended NeuronAI framework powering PosterMyWall's AI Chat, driving <mark>165K+ chats</mark> and <mark>96K+ generated assets</mark> at a <mark>75% positive feedback rate</mark> during a 6-week unmarketed soft launch. Added parallelism to the agent/node architecture and designed a hybrid agentic multimodal context formation layer (chosen over RAG-style embedding retrieval) that sends only relevant labeled chat assets to downstream agents, cutting workflow latency by <mark>6–8s</mark> and lifting positive feedback ratio by <mark>70%</mark>.</li>
         <li><strong>Architected an AI subtitling feature</strong> letting users add AI-generated or manual subtitles to audio/video content, sync and edit them via a React timeline-UI, and apply advanced styling/animations in a custom Fabric.js grouped object.</li>
-        <li><strong>Shipped the AI Image Generation panel</strong> — orchestrating multiple AI image models on the backend with prompt validation, quota management, and Stripe integration; an optimized ingestion pipeline injects generated assets directly onto the design canvas.</li>
+        <li><strong>Shipped the AI Image Generation panel</strong>, orchestrating multiple AI image models on the backend with prompt validation, quota management, and Stripe integration; an optimized ingestion pipeline injects generated assets directly onto the design canvas.</li>
         <li><strong>Engineered an end-to-end AI sticker pipeline</strong> generating thousands of stickers at scale with auto-tagged context-aware keywords (drastically improving semantic search), paired with a Python computer-vision sheet extractor that took manual asset throughput from <mark>50/day</mark> to <mark>100+/min</mark>.</li>
         <li><strong>Scaled stock media from 2K → 300K+ items</strong> across 8 categories by optimizing MySQL tables and relationships, automating preset generation on AWS S3 with ImageMagick/FFmpeg, and adding AI keyword/category tagging for efficient search via AWS CloudSearch and OpenSearch.</li>
-        <li><strong>Reverse-engineered the 2D transformation math</strong> behind Fabric.js's resize, scale, and rotate controls to rebuild them as HTML/CSS overlays — operating correctly even on canvas objects positioned outside the visible viewport.
+        <li><strong>Reverse-engineered the 2D transformation math</strong> behind Fabric.js's resize, scale, and rotate controls to rebuild them as HTML/CSS overlays, operating correctly even on canvas objects positioned outside the visible viewport.
           <div class="bullet-media">
             <video src="custom_controls_demo.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Custom Fabric.js HTML/CSS controls demo"></video>
           </div>
@@ -1521,7 +1545,7 @@
             <video src="color_palette_demo_3.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Color palette algorithm demo 3"></video>
           </div>
         </li>
-        <li><strong>Refactored <mark>57</mark> React components</strong> by eliminating duplicated state and anti-pattern useEffects, replacing them with reusable hooks and selectors so components only react to relevant updates — preventing wasted re-renders and significantly improving readability.</li>
+        <li><strong>Refactored <mark>57</mark> React components</strong> by eliminating duplicated state and anti-pattern useEffects, replacing them with reusable hooks and selectors so components only react to relevant updates, preventing wasted re-renders and significantly improving readability.</li>
       </ul>
       <div class="experience-stack">
         <span class="tag">TypeScript</span>
@@ -1576,7 +1600,7 @@
         <span class="project-role">Lead Full-Stack &amp; AI Engineer</span>
       </div>
       <div class="project-title">PosterMyWall AI Chat Agent</div>
-      <p class="project-desc">A multi-agent AI orchestrator that automates marketing workflows via natural language. Engineered agentic workflows with Gemini and OpenAI that infer user intent and trigger complex tool-calling — image generation, editing, upscaling, and social scheduling — all from a single prompt.</p>
+      <p class="project-desc">A multi-agent AI orchestrator that automates marketing workflows via natural language. Engineered agentic workflows with Gemini and OpenAI that infer user intent and trigger complex tool-calling, image generation, editing, upscaling, and social scheduling, all from a single prompt.</p>
       <div class="project-metrics">
         <div class="project-metric">
           <div class="project-metric-num">165K+</div>
@@ -1683,7 +1707,7 @@
         <span class="project-role">Full-Stack Engineer</span>
       </div>
       <div class="project-title">AI Subtitles &amp; Caption Engine</div>
-      <p class="project-desc">Automated subtitle engine using OpenAI transcription APIs, with a custom React timeline-UI for audio/video sync. Built a specialized Fabric.js grouped-object item for high-performance, deeply customizable on-canvas captions — <strong>more feature-rich than CapCut</strong>, with zero canvas bloat or lag.</p>
+      <p class="project-desc">Automated subtitle engine using OpenAI transcription APIs, with a custom React timeline-UI for audio/video sync. Built a specialized Fabric.js grouped-object item for high-performance, deeply customizable on-canvas captions, <strong>more feature-rich than CapCut</strong>, with zero canvas bloat or lag.</p>
       <div class="project-tags">
         <span class="project-tag">React</span>
         <span class="project-tag">TypeScript</span>
@@ -1765,7 +1789,7 @@
         <span class="project-role">Full-Stack Engineer</span>
       </div>
       <div class="project-title">AI Sticker Generation &amp; Tagging</div>
-      <p class="project-desc">Admin dashboard automating the lifecycle of thousands of stock assets. Engineered an end-to-end AI pipeline that generates stickers at scale and auto-assigns context-aware keywords — drastically improving semantic search accuracy. Built with lazy loading, categorized tabs, and complex filtering to handle heavy payloads.</p>
+      <p class="project-desc">Admin dashboard automating the lifecycle of thousands of stock assets. Engineered an end-to-end AI pipeline that generates stickers at scale and auto-assigns context-aware keywords, drastically improving semantic search accuracy. Built with lazy loading, categorized tabs, and complex filtering to handle heavy payloads.</p>
       <div class="project-tags">
         <span class="project-tag">React</span>
         <span class="project-tag">AI Image Gen</span>
@@ -1802,7 +1826,7 @@
         <span class="project-role">Full-Stack Engineer</span>
       </div>
       <div class="project-title">Automated Stock Sticker Extraction</div>
-      <p class="project-desc">Eliminated a major design bottleneck with a custom Python computer vision pipeline. Engineered a system to isolate individual stickers from large sheets — automated cropping, AI upscaling, and background removal. Transformed a manual process limited to 50 stickers/day into an automated workflow processing <strong>100+ assets in minutes</strong> — a 2,000%+ throughput gain.</p>
+      <p class="project-desc">Eliminated a major design bottleneck with a custom Python computer vision pipeline. Engineered a system to isolate individual stickers from large sheets, automated cropping, AI upscaling, and background removal. Transformed a manual process limited to 50 stickers/day into an automated workflow processing <strong>100+ assets in minutes</strong>, a 2,000%+ throughput gain.</p>
       <div class="project-tags">
         <span class="project-tag">Python</span>
         <span class="project-tag">Computer Vision</span>
@@ -1849,7 +1873,7 @@
         <img src="german a1 1.png" alt="German A1 revision app — quiz screen" loading="lazy"/>
         <img src="german a1 2.png" alt="German A1 revision app — vocabulary list" loading="lazy"/>
       </div>
-      <p class="oss-card-desc">Mobile-first study companion for German A1 — flashcards, vocab drills, and grammar exercises designed for quick daily revision on the go. Built end-to-end in collaboration with Claude as a quick personal tool and deployed on Vercel.</p>
+      <p class="oss-card-desc">Mobile-first study companion for German A1, flashcards, vocab drills, and grammar exercises designed for quick daily revision on the go. Built end-to-end in collaboration with Claude as a quick personal tool and deployed on Vercel.</p>
       <a href="https://german-a1-revision.vercel.app/" target="_blank" rel="noopener" class="oss-card-link">View Live ↗</a>
       <div class="oss-card-tags">
         <span class="project-tag">React</span>
@@ -1981,7 +2005,7 @@
   <div class="contact-inner fade-in">
     <span class="section-sub">06 / Contact</span>
     <h2 style="margin-top: 1rem;">Let's build something <em>great</em>.</h2>
-    <p>Whether you're hiring full-time, scoping a contract, or just want to swap notes on AI systems — I'd love to hear from you. I reply within a day.</p>
+    <p>Whether you're hiring full-time, scoping a contract, or just want to swap notes on AI systems, I'd love to hear from you. I reply within a day.</p>
     <a href="mailto:taimur.h.sarmad@gmail.com" class="contact-email">taimur.h.sarmad@gmail.com</a>
     <div class="contact-links">
       <a href="mailto:taimur.h.sarmad@gmail.com" class="btn btn-primary">
