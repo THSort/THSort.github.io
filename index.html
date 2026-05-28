@@ -604,6 +604,13 @@
     margin-bottom: 1.5rem;
     letter-spacing: 0.02em;
   }
+  .experience-company a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    transition: border-color 0.3s ease;
+  }
+  .experience-company a:hover { border-bottom-color: var(--accent); }
   .experience-bullets {
     list-style: none;
     display: flex;
@@ -695,6 +702,10 @@
     color: var(--accent);
     letter-spacing: 0.02em;
   }
+  .education-doc {
+    margin-top: 1.1rem;
+    max-width: 210px;
+  }
   .education-gpa {
     font-family: var(--font-mono);
     font-size: 0.72rem;
@@ -764,6 +775,25 @@
     margin-bottom: 1rem;
     line-height: 1.2;
   }
+  .project-title a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  .project-title a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  .project-title .title-arrow {
+    color: var(--accent);
+    font-size: 0.8em;
+    font-weight: 400;
+  }
+  .project-title .title-note {
+    font-size: 0.55em;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
   .project-desc {
     font-family: var(--font-body);
     font-size: 0.96rem;
@@ -779,6 +809,11 @@
     margin-bottom: 1.75rem;
     border: 1px solid var(--border);
     background: var(--border);
+  }
+  .project-metrics.metrics-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
   }
   .project-metric {
     flex: 1;
@@ -911,10 +946,8 @@
 
   /* OPEN SOURCE / RESEARCH */
   .oss-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-    overflow: hidden;
+    column-count: 2;
+    column-gap: 1.25rem;
   }
   .oss-card-preview {
     display: flex;
@@ -1032,6 +1065,8 @@
     position: relative;
     overflow: hidden;
     min-width: 0;
+    break-inside: avoid;
+    margin-bottom: 1.25rem;
   }
   .oss-card:hover {
     border-color: var(--border-strong);
@@ -1070,6 +1105,13 @@
     flex: 1;
   }
   .oss-card-desc strong { font-weight: 600; }
+  .oss-card-desc a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    transition: border-color 0.3s ease;
+  }
+  .oss-card-desc a:hover { border-bottom-color: var(--accent); }
   .oss-card-tags {
     display: flex;
     flex-wrap: wrap;
@@ -1274,11 +1316,15 @@
   @media (max-width: 1100px) {
     .about-grid, .freelance-grid { gap: 3rem; }
     .impact-grid { grid-template-columns: repeat(2, 1fr); }
-    .oss-grid { grid-template-columns: 1fr 1fr; }
   }
 
   @media (max-width: 900px) {
     nav { padding: 1.1rem 1.25rem; }
+    nav.scrolled {
+      background: rgba(8,13,30,0.94);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
     .nav-links { display: none; }
     .hero {
       padding: 6rem 1.25rem 3rem;
@@ -1323,7 +1369,7 @@
     .education-card { grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem 0; }
     .education-gpa { text-align: left; }
     .education-gpa .gpa-num { display: inline; font-size: 1.1rem; margin-right: 0.5rem; }
-    .oss-grid { grid-template-columns: 1fr; }
+    .oss-grid { column-count: 1; }
     .project-item { grid-template-columns: 1fr; min-height: auto; }
     .project-item.reverse { direction: ltr; }
     .project-media { height: 280px; }
@@ -1573,7 +1619,7 @@
     </div>
     <div>
       <h3 class="experience-role">Full-Stack Software Engineer</h3>
-      <div class="experience-company">PosterMyWall</div>
+      <div class="experience-company"><a href="https://www.postermywall.com" target="_blank" rel="noopener">PosterMyWall</a></div>
       <ul class="experience-bullets">
         <li><strong>Building an agentic AI poster editor</strong> that accepts a natural-language intent, renders the current poster, and iteratively edits its vector representation until the LLM judges the result satisfactory. Implemented two interchangeable architectures (orchestrated single-call with structured output, and a tool-calling agent driving edits across multi-turn conversations) using the OpenAI Responses API (GPT-5.5). Full-stack delivery: PHP 8.2 / CodeIgniter 4 backend, Node/TypeScript worker with Puppeteer for screenshots, React 19 / Redux Toolkit panel with polling UI behind a feature flag.</li>
         <li><strong>Built a multi-agent AI system</strong> on an extended NeuronAI framework powering PosterMyWall's AI Chat, driving <mark>165K+ chats</mark> and <mark>96K+ generated assets</mark> at a <mark>75% positive feedback rate</mark> during a 6-week unmarketed soft launch. Added parallelism to the agent/node architecture and designed a hybrid agentic multimodal context formation layer (chosen over RAG-style embedding retrieval) that sends only relevant labeled chat assets to downstream agents, cutting workflow latency by <mark>6–8s</mark> and lifting positive feedback ratio by <mark>70%</mark>.</li>
@@ -1623,6 +1669,11 @@
     <div>
       <div class="education-degree">B.S. Computer Science</div>
       <div class="education-school">Lahore University of Management Sciences (LUMS)</div>
+      <a href="Taimur Hassan Sarmad - Degree and Transcript.pdf" target="_blank" rel="noopener" class="pdf-thumb education-doc" aria-label="Open attested degree and transcript PDF">
+        <span class="pdf-thumb-icon">PDF</span>
+        <span class="pdf-thumb-label">Degree &amp; Transcript</span>
+        <span class="pdf-thumb-meta">View ↗</span>
+      </a>
     </div>
     <div class="education-gpa">
       <span class="gpa-num">3.90</span>
@@ -1647,20 +1698,24 @@
         <span class="project-num">01 / 06</span>
         <span class="project-role">Lead Full-Stack &amp; AI Engineer</span>
       </div>
-      <div class="project-title">PosterMyWall AI Chat Agent</div>
+      <div class="project-title"><a href="https://www.postermywall.com/index.php/ai/chat" target="_blank" rel="noopener">PosterMyWall AI Chat Agent <span class="title-arrow">↗</span></a> <span class="title-note">(Launched Feb 2026)</span></div>
       <p class="project-desc">A multi-agent AI orchestrator that automates marketing workflows via natural language. Engineered agentic workflows with Gemini and OpenAI that infer user intent and trigger complex tool-calling, image generation, editing, upscaling, and social scheduling, all from a single prompt.</p>
-      <div class="project-metrics">
+      <div class="project-metrics metrics-2x2">
         <div class="project-metric">
-          <div class="project-metric-num">165K+</div>
+          <div class="project-metric-num">700K+</div>
           <div class="project-metric-label">Chats</div>
         </div>
         <div class="project-metric">
-          <div class="project-metric-num">96K+</div>
-          <div class="project-metric-label">Assets</div>
+          <div class="project-metric-num">7.85%</div>
+          <div class="project-metric-label">New-User Conversion</div>
         </div>
         <div class="project-metric">
-          <div class="project-metric-num">75%</div>
-          <div class="project-metric-label">Positive Feedback</div>
+          <div class="project-metric-num">460K+</div>
+          <div class="project-metric-label">Designs Published</div>
+        </div>
+        <div class="project-metric">
+          <div class="project-metric-num">1.8M+</div>
+          <div class="project-metric-label">Assets Generated</div>
         </div>
       </div>
       <div class="project-tags">
@@ -1705,7 +1760,7 @@
         <span class="project-num">02 / 06</span>
         <span class="project-role">UI/UX + Full-Stack Engineer</span>
       </div>
-      <div class="project-title">Lahore AQI Updates — Punjab Government EPA</div>
+      <div class="project-title"><a href="https://github.com/THSort/LahoreAQI-releases/releases/latest" target="_blank" rel="noopener">Lahore AQI Updates — Punjab Government EPA <span class="title-arrow">↗</span></a></div>
       <p class="project-desc">A React Native app for the Punjab Government delivering real-time AQI data, 24-hour ML forecasts, and personalized location-based push notifications. Migrated monitor data from MongoDB to <strong>InfluxDB</strong> when readings went minute-level, cutting storage costs by 30× and time-range queries by 200×.</p>
       <div class="project-metrics">
         <div class="project-metric">
@@ -1963,7 +2018,8 @@
       <div class="oss-card-preview">
         <img src="fact-check-webapp.png" alt="FactCheck web app mobile screenshot" loading="lazy"/>
       </div>
-      <p class="oss-card-desc">Python web scraper fetching and translating fact-checked articles into Urdu. Cron-scheduled Google Translate API with Redis caching cut API costs by <strong style="color:var(--accent)">95%</strong>. React + Flask web app with SSR, lazy-loading, and infinite scroll, optimized for low-resource devices and deployed on EC2/Apache.</p>
+      <p class="oss-card-desc">Built for an HCI research project (supervised by <a href="https://www.ihsanqazi.com/" target="_blank" rel="noopener">Prof. Ihsan Ayyub Qazi</a>) studying whether fact-checking portals counter political misinformation among low-digital-literacy users. A Python scraper fetched and Urdu-translated articles from <a href="https://www.sochfactcheck.com" target="_blank" rel="noopener">Soch Fact Check</a> — cron-scheduled Google Translate with Redis caching cut API costs by <strong style="color:var(--accent)">95%</strong>. The React + Flask web app (SSR, lazy-loading, infinite scroll) was tuned for low-end phones with built-in user-journey tracking, then auto-distributed weekly to <strong style="color:var(--accent)">2,000+</strong> participants over WhatsApp using a Bounded-Pareto delay model to evade spam filters.</p>
+      <a href="https://www.figma.com/proto/aZdWLX0LT9qQinEHcKPfyp/Soch-Fact-Check-Portal?node-id=0%3A1&amp;scaling=scale-down&amp;page-id=0%3A1&amp;starting-point-node-id=2%3A2" target="_blank" rel="noopener" class="oss-card-link">Portal Prototype ↗</a>
       <div class="oss-card-tags">
         <span class="project-tag">Python</span>
         <span class="project-tag">Flask</span>
@@ -1971,6 +2027,7 @@
         <span class="project-tag">Redis</span>
         <span class="project-tag">SSR</span>
         <span class="project-tag">AWS EC2</span>
+        <span class="project-tag">UX Research</span>
       </div>
     </div>
     <div class="oss-card fade-in">
@@ -2002,6 +2059,58 @@
         <span class="project-tag">React Native</span>
         <span class="project-tag">Kernel</span>
         <span class="project-tag">Signal Processing</span>
+      </div>
+    </div>
+    <div class="oss-card fade-in">
+      <div class="oss-card-meta">
+        <span class="oss-card-type">ML Research · LUMS</span>
+        <span class="oss-card-period">Jan – May 2023</span>
+      </div>
+      <h3 class="oss-card-title">DetectIt — Detecting AI-Generated C++ Code</h3>
+      <p class="oss-card-desc">A framework to gauge whether a C++ program is human- or AI-written from its structure. Explored tokenization schemes to feed C++ into a transformer, prompt-engineered a diverse corpus of AI solutions to compare against a human-written user study, and automated a dataset of code metrics (Halstead volume, cyclomatic complexity, maintainability index). A Mann-Whitney U test on the static-analysis metrics revealed <strong style="color:var(--accent)">no statistically significant</strong> separation between the two populations. Supervised by <a href="https://www.ihsanqazi.com/" target="_blank" rel="noopener">Prof. Ihsan</a> &amp; <a href="https://web.lums.edu.pk/~zafar/" target="_blank" rel="noopener">Zafar Ayyub Qazi</a> (<a href="https://nsg.lums.edu.pk/" target="_blank" rel="noopener">Network &amp; Systems Group</a>).</p>
+      <div class="oss-card-pdfs">
+        <a href="https://drive.google.com/file/d/1E5_asVSHOraT_kEoPulkLxAs0a3pQATk/view?usp=sharing" target="_blank" rel="noopener" class="pdf-thumb" aria-label="Open DetectIt project report PDF in Google Drive">
+          <span class="pdf-thumb-icon">PDF</span>
+          <span class="pdf-thumb-label">Project Report</span>
+          <span class="pdf-thumb-meta">View ↗</span>
+        </a>
+      </div>
+      <div class="oss-card-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Transformers</span>
+        <span class="project-tag">NLP</span>
+        <span class="project-tag">Static Analysis</span>
+        <span class="project-tag">Statistics</span>
+      </div>
+    </div>
+    <div class="oss-card fade-in">
+      <div class="oss-card-meta">
+        <span class="oss-card-type">Speech &amp; NLP Research · LUMS</span>
+        <span class="oss-card-period">Aug 2021 – May 2023</span>
+      </div>
+      <h3 class="oss-card-title">Urdu Speech &amp; NLP — CSALT</h3>
+      <p class="oss-card-desc">Research member at LUMS' <a href="https://www.c-salt.org/" target="_blank" rel="noopener">Center for Speech and Language Technologies</a>, working on low-resource Urdu speech. Compiled a phonetically diverse Urdu corpus and coordinated a 13-person team to gather <strong style="color:var(--accent)">18,000+</strong> recordings, fine-tuned Wav2Vec2 with CTC down to a <strong style="color:var(--accent)">37%</strong> word error rate, and helped bootstrap a standardized Urdu NLP library for the lab. Supervised by <a href="https://aghaaliraza.com/" target="_blank" rel="noopener">Prof. Agha Ali Raza</a>.</p>
+      <div class="oss-card-tags">
+        <span class="project-tag">PyTorch</span>
+        <span class="project-tag">Wav2Vec2</span>
+        <span class="project-tag">ASR</span>
+        <span class="project-tag">Deep Learning</span>
+        <span class="project-tag">Urdu NLP</span>
+      </div>
+    </div>
+    <div class="oss-card fade-in">
+      <div class="oss-card-meta">
+        <span class="oss-card-type">HCI Research · CHISEL, LUMS</span>
+        <span class="oss-card-period">Aug – Dec 2022</span>
+      </div>
+      <h3 class="oss-card-title">Ishaara — Gamified Sign-Language Learning</h3>
+      <p class="oss-card-desc">A gamified e-learning app teaching Pakistan Sign Language to hearing primary-school children, aimed at bridging the Deaf–hearing divide. Built at LUMS' <a href="https://chisel.pk/" target="_blank" rel="noopener">CHISEL</a> lab: ran semi-structured interviews with educators and parents, contextual inquiries with <strong style="color:var(--accent)">32</strong> children, and storyboarding sessions, then built and usability-tested a high-fidelity prototype — <strong style="color:var(--accent)">15 of 18</strong> children completed every task. Supervised by Prof. Suleman Shahid.</p>
+      <a href="https://www.figma.com/proto/pubPyCi3ENyPPCUCGQIXyC/Ishaara-Prototype?node-id=1%3A2&amp;starting-point-node-id=1%3A2" target="_blank" rel="noopener" class="oss-card-link">View Prototype ↗</a>
+      <div class="oss-card-tags">
+        <span class="project-tag">HCI</span>
+        <span class="project-tag">UX Research</span>
+        <span class="project-tag">Figma</span>
+        <span class="project-tag">Usability Testing</span>
       </div>
     </div>
     <div class="oss-card fade-in">
@@ -2147,17 +2256,31 @@
     }, {passive:true});
   });
 
-  // Nav scroll + scroll progress
+  // Nav scroll + scroll progress (rAF-throttled; page height cached to avoid per-scroll reflow)
   const nav = document.getElementById('nav');
   const progress = document.getElementById('scrollProgress');
+  let maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  let ticking = false;
+  function updateScroll() {
+    const y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 40);
+    progress.style.width = (maxScroll > 0 ? (y / maxScroll) * 100 : 0) + '%';
+    ticking = false;
+  }
   function onScroll() {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
-    progress.style.width = pct + '%';
+    if (!ticking) { ticking = true; requestAnimationFrame(updateScroll); }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(() => {
+      maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    }).observe(document.body);
+  } else {
+    window.addEventListener('resize', () => {
+      maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    }, { passive: true });
+  }
+  updateScroll();
 
   // Fade in on scroll
   const obs = new IntersectionObserver((entries) => {
