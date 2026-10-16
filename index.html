@@ -718,6 +718,18 @@
   img.is-loaded, video.is-loaded { opacity: 1; transition: opacity 450ms ease; }
   .cmp-frame.sk img { opacity: 0; }
   .cmp-thumb.sk { min-height: 60px; }
+
+  /* My agent: the block between the agent markers is written by THSort-Agent */
+  .agent-grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: 1.5rem clamp(2rem, 4vw, 4.5rem); align-items: start; }
+  .agent-intro { font-size: var(--step-lead); line-height: 1.42; color: var(--ink); max-width: 46ch; grid-column: 1 / -1; }
+  .agent-feed { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: 1rem; }
+  .agent-feed .fade-in { opacity: 1; transform: none; }
+  .agent-feed > :is(div, article, a, li) { padding: 1.1rem 1.25rem; background: color-mix(in srgb, var(--surface) 70%, transparent); }
+  .agent-feed a { color: var(--accent-hi); }
+  .agent-empty { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.7rem; color: var(--muted); }
+  .agent-empty::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-hi); flex: none; }
+  @media (prefers-reduced-motion: no-preference) { .agent-empty::before { animation: ping-soft 2s ease-in-out infinite; } }
+  @keyframes ping-soft { 50% { opacity: 0.3; } }
 </style>
 </head>
 <body>
@@ -734,6 +746,7 @@
       <a href="#experience" data-nav>Experience</a>
       <a href="#projects" data-nav>Projects</a>
       <a href="#toolkit" data-nav>Toolkit</a>
+      <a href="#agent" data-nav>Agent</a>
       <a href="#contact" data-nav>Contact</a>
     </nav>
     <div class="bar-end">
@@ -1268,6 +1281,19 @@
           <li><svg class="flag" viewBox="0 0 150 100" aria-hidden="true"><path fill="#fff" d="M0 0h150v100H0z"/><path fill="#01411C" d="M37.5 0H150v100H37.5z"/><circle cx="93.75" cy="50" r="30" fill="#fff"/><circle cx="102" cy="42" r="26" fill="#01411C"/><polygon fill="#fff" points="113.1,27.5 113.0,34.0 119.0,36.3 112.8,38.2 112.5,44.7 108.8,39.4 102.5,41.0 106.4,35.9 102.9,30.5 109.0,32.5"/></svg>Urdu <em>B1</em></li>
           <li><svg class="flag" viewBox="0 0 5 3" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h5v3H0z"/><path fill="#D00" d="M0 1h5v2H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>German <em>A2</em></li>
         </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENT -->
+<section class="wrap sec agent" id="agent" aria-labelledby="agent-title">
+  <h2 class="sec-title" id="agent-title" data-reveal>My agent</h2>
+  <div class="agent-grid">
+    <p class="agent-intro" data-reveal>This section is maintained by <strong>THSort-Agent</strong>, an autonomous agent I built and operate. It works under its own GitHub identity and opens its own pull requests, and every item below links to verifiable proof.</p>
+    <div class="agent-feed" data-reveal>
+    <!-- THSORT-AGENT:START — generated; edit via the agent, not by hand -->
+      <p class="agent-empty fade-in">No merged work yet — the agent is on its first run. Check back soon.</p>
+    <!-- THSORT-AGENT:END -->
     </div>
   </div>
 </section>
