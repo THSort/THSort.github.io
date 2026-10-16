@@ -1,0 +1,11 @@
+# Never publish repo internals or tooling
+.git
+.gitignore
+.assetsignore
+.wrangler
+wrangler.jsonc
+wrangler.toml
+node_modules
+.DS_Store
+*.md
+*.mov

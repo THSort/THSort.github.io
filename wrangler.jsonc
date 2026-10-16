@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Static site served by Workers static assets (no server code).
+  "name": "thsort",
+  "compatibility_date": "2026-10-12",
+  "assets": {
+    "directory": ".",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [
+    { "pattern": "thsort.dev", "custom_domain": true },
+    { "pattern": "www.thsort.dev", "custom_domain": true }
+  ],
+  "workers_dev": true,
+  "observability": { "enabled": true }
+}
